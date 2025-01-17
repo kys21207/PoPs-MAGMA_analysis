@@ -1,0 +1,24 @@
+#!/bin/bash 
+
+# Path to the directory containing GWAS files
+gwas_input_path="/mnt/project/geunity_data"
+
+# Path to the example.sh script
+example_script_path="./pops_run.sh"
+
+# Find all GWAS files with the .regenie.gz extension in the input path
+for gwas_file in ${gwas_input_path}/*.regenie.gz; do
+    # Get the file name (strip the path)
+    gwas_file_name=$(basename "$gwas_file")
+
+    # Run the example.sh script with the current GWAS file
+    bash $example_script_path -g "$gwas_file_name"
+
+    # Check the exit status of example.sh
+    if [ $? -ne 0 ]; then
+        echo "Error processing $gwas_file_name. Skipping to the next file."
+        continue
+    fi
+done
+
+echo "All GWAS files processed."
