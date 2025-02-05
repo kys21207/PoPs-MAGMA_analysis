@@ -1,4 +1,4 @@
-# PoPs-MAGMA
+# PoPs 
 
 Download Pops codes from https://github.com/FinucaneLab/pops
 Download Pops features from https://www.dropbox.com/sh/o6t5jprvxb8b500/AADZ8qD6Rpz4uvCk0b5nUnPaa/data?dl=0&subfolder_nav_tracking=1
@@ -54,3 +54,7 @@ Some genes may be excluded due to missing data, quality issues, or their use as 
 Example: <br>
 True: Indicates the gene was used for training the PoPS model. <br>
 False: Indicates the gene was not used for training. <br>
+
+# MAGMA gene set analysis
+## Good gene set data: https://www.gsea-msigdb.org/gsea/msigdb/collections.jsp
+The 34837 gene sets in the Human Molecular Signatures Database (MSigDB) 
