@@ -22,6 +22,7 @@ pvar=https://www.dropbox.com/s/op9osq6luy3pjg8/all_phase3.pvar.zst?dl=1
 sample=https://www.dropbox.com/s/yozrzsdrwqej63q/phase3_corrected.psam?dl=1
 And filter 1st+2nd degree: deg2_hg38.king.cutoff.out.id (629 samples) and keep only EUR (as needed)
 
+### *** If a gwas has variants with a very small p-value, carefully treat them When running MAGMA. *** 
 ## 2. Run PoPs analysis using run_multi_traits.sh
 
 Pathway gene-set data: Index of /EM_Genesets/current_release/Human/ensembl/Pathways (https://download.baderlab.org/EM_Genesets/current_release/Human/ensembl/Pathways/)
