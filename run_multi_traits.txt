@@ -1,25 +1,34 @@
 #!/bin/bash 
 
 # setup env for pops analysis
-python3 -m venv myenv
-source myenv/bin/activate
-python3 -m pip install scikit-learn scipy matplotlib pandas
+#python3 -m venv myenv
+#source myenv/bin/activate
+#python3 -m pip install scikit-learn scipy matplotlib pandas
 #git clone https://github.com/FinucaneLab/pops.git
 
 # Path to the directory containing GWAS files
-gwas_input_path="/mnt/project/genuity_data/tmp_gwas_data"
+gwas_input_path="/mnt/project/genuity_data/all_gwas_results"
 
 chmod +x ./codes/pipeline/pops_run.sh
 # Path to the example.sh script
 example_script_path="./codes/pipeline/pops_run.sh"
 
-# Find all GWAS files with the .regenie.gz extension in the input path
-for gwas_file in ${gwas_input_path}/*.regenie.gz; do
-    # Get the file name (strip the path)
-    gwas_file_name=$(basename "$gwas_file" )
+# Function to extract the sample size from the 'N' column of a GWAS file
+extract_sample_size() {
+    local gwas_file=$1
+    zcat "$gwas_file" | awk -F'\t' 'NR==1 {for (i=1; i<=NF; i++) if ($i=="N") col=i} NR>1 {print $col; exit}'
+}
 
-    # Run the example.sh script with the current GWAS file
-    bash $example_script_path -g "$gwas_file_name" -f "$gwas_input_path"
+# Find all GWAS files with the .regenie.tsv.gz extension in the input path
+for gwas_file in ${gwas_input_path}/*.regenie.tsv.gz; do
+    # Get the file name (strip the path)
+    gwas_file_name=$(basename "$gwas_file")
+    
+    # Extract sample size from the 'N' column
+    sample_size=$(extract_sample_size "$gwas_file")
+
+    # Run the example.sh script with the current GWAS file and sample size
+    bash $example_script_path -g "$gwas_file_name" -f "$gwas_input_path" -n "$sample_size"
 
     # Check the exit status of example.sh
     if [ $? -ne 0 ]; then
